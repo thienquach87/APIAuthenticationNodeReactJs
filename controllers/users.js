@@ -1,4 +1,15 @@
+const JTW = require('jsonwebtoken');
 const User = require('../models/user');
+const {JWT_SECRET} = require('../configuration');
+
+signToken = (user) => {
+    return JTW.sign({
+        iss: 'thien.quach',
+        sub: user.id,
+        iat: new Date().getTime(),
+        exp: new Date().setDate(new Date().getDate() + 1)
+    },JWT_SECRET);
+}
 module.exports = {
     signUp: async (req, res, next) => {
 
@@ -15,14 +26,19 @@ module.exports = {
         await newUser.save();
 
         // Respond with token
-        res.json({ user: 'created' });
+        const token = signToken(newUser);
+        res.status(200).json({token});
     }, 
 
     signIn: async (req, res, next) => {
-        console.log('UserController.signIn() called!');
+        //generate token
+        
+        const token = signToken(req.user);
+        res.status(200).json({token});
     },
 
     secret: async (req, res, next) => {
-        console.log('UserController.secret() called!');
+        console.log('I managed to get here!');
+        res.json({secret: "resource"});
     }
 }

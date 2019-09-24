@@ -1,3 +1,12 @@
 module.exports = {
-    JWT_SECRET: 'thien.quach'
-}
+  JWT_SECRET: 'codeworkrauthentication',
+  oauth: {
+    google: {
+      clientID: '',
+      clientSecret: ''
+    },
+    facebook: {
+
+    }
+  }
+};
